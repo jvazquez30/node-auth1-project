@@ -19,15 +19,16 @@ function findBy(filter) {
  */
 function findById(user_id) {
   return db('users')
-    .where({ user_id })
+  .select('user_id', 'username')
+    .where('user_id', user_id)
     .first()
 }
 
 /**
   resolves to the newly inserted user { user_id, username }
  */
-function add(user) {
- const [id] = db('users').insert(user)
+async function add(user) {
+ const [id] = await db('users').insert(user)
 
  return findById(id)
 }
